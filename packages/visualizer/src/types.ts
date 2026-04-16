@@ -390,4 +390,8 @@ export interface UniversalPlaygroundProps {
   className?: string;
   dryMode?: boolean;
   showContextPreview?: boolean;
+
+  // Extension points
+  extraToolbarContent?: React.ReactNode; // Custom content rendered after the "more" dropdown in PromptInput
+  onBeforeRun?: (value: FormValue) => Promise<FormValue>; // Async callback to transform form value before execution
 }

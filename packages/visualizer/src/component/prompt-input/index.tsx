@@ -59,6 +59,7 @@ interface PromptInputProps {
   hideDomAndScreenshotOptions?: boolean; // Hide domIncluded and screenshotIncluded options
   actionSpace: DeviceAction<any>[]; // Required actionSpace for dynamic parameter detection
   deviceType?: DeviceType;
+  extraToolbarContent?: React.ReactNode; // Optional content rendered after the "more" dropdown button
 }
 
 export const PromptInput: React.FC<PromptInputProps> = ({
@@ -75,6 +76,7 @@ export const PromptInput: React.FC<PromptInputProps> = ({
   actionSpace,
   hideDomAndScreenshotOptions = false,
   deviceType,
+  extraToolbarContent,
 }) => {
   const [hoveringSettings, setHoveringSettings] = useState(false);
   const [promptValue, setPromptValue] = useState('');
@@ -1027,6 +1029,7 @@ export const PromptInput: React.FC<PromptInputProps> = ({
               <DownOutlined style={{ fontSize: '10px', marginLeft: '2px' }} />
             </Button>
           </Dropdown>
+          {extraToolbarContent}
         </div>
 
         <div className="action-icons">

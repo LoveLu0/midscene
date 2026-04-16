@@ -60,6 +60,8 @@ export function UniversalPlayground({
   className = '',
   dryMode = false,
   showContextPreview = true,
+  extraToolbarContent,
+  onBeforeRun,
 }: UniversalPlaygroundProps) {
   const [form] = Form.useForm();
   const { config } = useEnvConfig();
@@ -178,14 +180,19 @@ export function UniversalPlayground({
   }, [playgroundSDK, config]);
 
   // Handle form submission with error handling
+  // If onBeforeRun is provided, it can transform the form value before execution
+  // (e.g., deep thinking pre-processing that sends input to an external service first).
   const handleFormRun = useCallback(async () => {
     try {
-      const value = form.getFieldsValue() as FormValue;
+      let value = form.getFieldsValue() as FormValue;
+      if (onBeforeRun) {
+        value = await onBeforeRun(value);
+      }
       await executeAction(value);
     } catch (error: any) {
       message.error(error?.message || 'Execution failed');
     }
-  }, [form, executeAction]);
+  }, [form, executeAction, onBeforeRun]);
 
   // Check if run button should be enabled
   const configAlreadySet = Object.keys(config || {}).length >= 1;
@@ -398,6 +405,7 @@ export function UniversalPlayground({
             onStop={handleStop}
             actionSpace={actionSpace}
             deviceType={deviceType}
+            extraToolbarContent={extraToolbarContent}
           />
         </div>
 
