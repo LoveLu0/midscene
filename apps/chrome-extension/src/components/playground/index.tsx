@@ -188,10 +188,17 @@ export function BrowserExtensionPlayground({
   // Deep thinking toggle + API URL popover rendered after the "more" dropdown
   const deepThinkingToolbar = useMemo(
     () => (
-      <div className="deep-thinking-toolbar">
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          flexShrink: 0,
+          marginLeft: 4,
+        }}
+      >
         <Popover
           content={
-            <div className="deep-thinking-api-config">
+            <div style={{ padding: 4 }}>
               <div style={{ marginBottom: 8, fontSize: 12, color: '#666' }}>
                 Deep Thinking API URL
               </div>
@@ -245,7 +252,16 @@ export function BrowserExtensionPlayground({
                 : 'Deep Thinking OFF'
             }
           >
-            <div className="deep-thinking-switch-wrapper">
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                cursor: 'pointer',
+                padding: '2px 6px',
+                borderRadius: 4,
+              }}
+            >
               <Switch
                 size="small"
                 checked={deepThinkingEnabled}
@@ -253,7 +269,14 @@ export function BrowserExtensionPlayground({
                 loading={deepThinkingLoading}
               />
               <span
-                className={`deep-thinking-label ${deepThinkingEnabled ? 'active' : ''}`}
+                style={{
+                  fontSize: 11,
+                  color: deepThinkingEnabled ? '#1677ff' : '#999',
+                  whiteSpace: 'nowrap' as const,
+                  userSelect: 'none' as const,
+                  fontWeight: deepThinkingEnabled ? 500 : 'normal',
+                  transition: 'color 0.2s',
+                }}
                 onClick={() => {
                   if (deepThinkingEnabled) {
                     setShowApiUrlInput((prev) => !prev);
